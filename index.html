@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Senses Store - Rastreo de Pedido</title>
+    <title>SENSES - Tracking System</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #8a2be2;
-            --primary-light: #f3e8ff;
-            --secondary: #ec4899;
-            --text-dark: #1f2937;
-            --text-gray: #6b7280;
-            --bg-light: #f9fafb;
+            --purple-main: #6b21a8;
+            --purple-accent: #7e22ce;
+            --bg-light: #f1f5f9;
+            --text-dark: #1e293b;
+            --text-gray: #64748b;
             --success: #10b981;
-            --pending: #e5e7eb;
+            --whatsapp: #25d366;
         }
 
         * {
@@ -25,97 +24,129 @@
         }
 
         body {
-            background-color: #f3f4f6;
+            background-color: var(--bg-light);
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 20px 10px;
         }
 
-        .card {
-            background: white;
-            width: 100%;
-            max-width: 500px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 30px 20px;
+        .brand-header {
             text-align: center;
+            margin-bottom: 20px;
         }
 
-        .header h1 {
+        .brand-header h1 {
+            color: var(--purple-main);
             font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .brand-header p {
+            color: var(--text-gray);
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .hero-card {
+            background: linear-gradient(135deg, #581c87, #7e22ce);
+            color: white;
+            padding: 25px 20px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(107, 33, 168, 0.2);
+        }
+
+        .hero-card .icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .hero-card h2 {
+            font-size: 18px;
             font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
 
-        .header p {
-            font-size: 14px;
+        .hero-card p {
+            font-size: 12px;
             opacity: 0.9;
+            line-height: 1.4;
         }
 
-        .search-box {
-            padding: 20px;
+        .search-card {
             background: white;
-            border-bottom: 1px solid #f0f0f0;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .search-card label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .search-row {
             display: flex;
             gap: 10px;
         }
 
-        .search-box input {
+        .search-row input {
             flex: 1;
-            padding: 12px 16px;
-            border: 2px solid #e5e7eb;
-            border-radius: 10px;
+            padding: 12px 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
             font-size: 14px;
             outline: none;
-            transition: border-color 0.3s;
+            text-transform: uppercase;
         }
 
-        .search-box input:focus {
-            border-color: var(--primary);
-        }
-
-        .search-box button {
-            background: var(--primary);
+        .search-row button {
+            background: var(--purple-accent);
             color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 10px;
+            padding: 12px 22px;
+            border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .search-box button:hover {
-            background: #7522be;
-        }
-
-        .content {
-            padding: 25px 20px;
-        }
-
-        .info-cliente {
-            background: var(--primary-light);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .info-cliente span {
-            font-weight: 600;
-            color: var(--primary);
             font-size: 14px;
+        }
+
+        .result-card {
+            background: white;
+            padding: 25px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .client-header {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .client-header h3 {
+            color: var(--purple-main);
+            font-size: 16px;
+        }
+
+        .client-header p {
+            color: var(--text-gray);
+            font-size: 13px;
         }
 
         .timeline {
@@ -130,15 +161,13 @@
             top: 10px;
             bottom: 10px;
             width: 3px;
-            background: var(--pending);
-            border-radius: 2px;
+            background: #e2e8f0;
         }
 
         .step {
             position: relative;
-            margin-bottom: 25px;
-            opacity: 0.5;
-            transition: all 0.3s;
+            margin-bottom: 20px;
+            opacity: 0.4;
         }
 
         .step:last-child {
@@ -152,18 +181,17 @@
         .step-icon {
             position: absolute;
             left: -30px;
-            top: 0;
-            width: 25px;
-            height: 25px;
+            top: 2px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             background: white;
-            border: 3px solid var(--pending);
+            border: 2px solid #cbd5e1;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
+            font-size: 11px;
             color: white;
-            z-index: 1;
         }
 
         .step.completed .step-icon {
@@ -172,113 +200,151 @@
         }
 
         .step.active .step-icon {
-            background: var(--primary);
-            border-color: var(--primary-light);
-            box-shadow: 0 0 0 4px var(--primary-light);
-        }
-
-        .step-content {
-            padding-left: 10px;
+            background: var(--purple-accent);
+            border-color: var(--purple-accent);
+            box-shadow: 0 0 0 4px #f3e8ff;
         }
 
         .step-title {
             font-size: 14px;
             font-weight: 600;
             color: var(--text-dark);
-            margin-bottom: 2px;
         }
 
         .step.active .step-title {
-            color: var(--primary);
+            color: var(--purple-main);
             font-size: 15px;
         }
 
         .step-time {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-gray);
+        }
+
+        .support-card {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .support-card h4 {
+            font-size: 14px;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .support-card p {
+            font-size: 11px;
+            color: var(--text-gray);
+            margin-bottom: 15px;
+        }
+
+        .whatsapp-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--whatsapp);
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 13px;
         }
 
         .error-msg {
             color: #ef4444;
             text-align: center;
-            padding: 20px;
-            font-size: 14px;
+            padding: 10px;
+            font-size: 13px;
             display: none;
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <div class="header">
-            <h1>SENSES STORE</h1>
-            <p>Rastreo de Envíos</p>
+    <div class="brand-header">
+        <h1>SENSES</h1>
+        <p>TRACKING SYSTEM</p>
+    </div>
+
+    <div class="container">
+
+        <!-- TARJETA HERO -->
+        <div class="hero-card">
+            <div class="icon">✨📦</div>
+            <h2>¡Sigue tu envío en tiempo real!</h2>
+            <p>Ingresa tu número de guía para consultar el estado actualizado de tu paquete.</p>
         </div>
 
-        <div class="search-box">
-            <input type="text" id="trackingInput" placeholder="Ingresa tu N° de Guía (ej. SNS-2026)">
-            <button onclick="buscarPedido()">Buscar</button>
+        <!-- BUSCADOR -->
+        <div class="search-card">
+            <label>Número de guía de rastreo</label>
+            <div class="search-row">
+                <input type="text" id="trackingInput" placeholder="EJ: SNS-1001">
+                <button onclick="buscarPedido()">Buscar</button>
+            </div>
+            <div id="errorMsg" class="error-msg">Número de guía no encontrado.</div>
         </div>
 
-        <div id="errorMsg" class="error-msg">
-            No encontramos ese número de guía. Por favor verifica e intenta de nuevo.
-        </div>
-
-        <div class="content" id="trackingResult" style="display: none;">
-            <div class="info-cliente">
-                <span id="clienteNombre">Cliente: ---</span>
-                <span id="guiaCodigo" style="color: var(--text-gray);">Guía: ---</span>
+        <!-- RESULTADOS DE RASTREO -->
+        <div class="result-card" id="trackingResult" style="display: none;">
+            <div class="client-header">
+                <h3 id="guiaCodigo">Guía: ---</h3>
+                <p id="clienteNombre">Cliente: ---</p>
             </div>
 
-            <div class="timeline" id="timelineSteps">
-                <!-- Los pasos se generan dinámicamente -->
-            </div>
+            <div class="timeline" id="timelineSteps"></div>
         </div>
+
+        <!-- TARJETA DE SOPORTE WHATSAPP -->
+        <div class="support-card">
+            <h4>¿Tienes alguna duda con tu paquete?</h4>
+            <p>Nuestro equipo de soporte está disponible para ayudarte en todo momento.</p>
+            <a href="https://wa.me/573016878177" target="_blank" class="whatsapp-btn">
+                💬 Contactar Soporte por WhatsApp
+            </a>
+        </div>
+
     </div>
 
     <script>
         // =========================================================
-        // TU AGENDA DE PEDIDOS (AQUÍ ES DONDE EDITAS CADA CHICA)
+        // TU AGENDA DE PEDIDOS (AQUÍ SIGUES AGREGANDO TUS CHICAS)
         // =========================================================
         const pedidos = {
 
-            // --- CHICA 1 ---
+            "SNS-1001": {
+                cliente: "Cliente: Senses Agency VIP",
+                pasoActual: 11,
+                fechas: {
+                    0: "Sábado - 09:00 AM",
+                    11: "Entregado con éxito"
+                }
+            },
+
             "SNS-2026": {
                 cliente: "Cliente: Sofía Gómez",
-                pasoActual: 7, // En qué número de paso va hoy (del 0 al 11)
+                pasoActual: 7,
                 fechas: {
                     0: "18 Jul - 10:50 AM",
-                    1: "18 Jul - 03:00 PM",
-                    2: "19 Jul - 09:00 AM",
-                    3: "19 Jul - 02:15 PM",
-                    4: "20 Jul - 08:30 AM",
-                    5: "21 Jul - 11:00 AM",
-                    6: "21 Jul - 04:30 PM",
                     7: "22 Jul - 06:00 PM"
                 }
-            }, 
-        // --- CHICA NUEVA ---
-        "SNS-004": {
-            cliente: "Cliente: Julia duran",
-            pasoActual: 0,
-            fechas: {
-                0: "28 Jul - 10:00 AM"
-            }
-        },
-            
-            // --- CHICA 2 (Ejemplo para cuando agregues otra) ---
-            "SNS-2027": {
-                cliente: "Cliente: María Pérez",
-                pasoActual: 1,
+            },
+
+            "SNS-004": {
+                cliente: "Cliente: Julia duran",
+                pasoActual: 0,
                 fechas: {
-                    0: "25 Jul - 02:30 PM",
-                    1: "26 Jul - 09:00 AM"
+                    0: "28 Jul - 10:00 AM"
                 }
             }
 
         };
 
-        // LISTA MAESTRA DE PASOS DEL PAQUETE
         const listaPasos = [
             "📦 Pedido confirmado",
             "📦 Preparando pedido",
@@ -319,21 +385,19 @@
                 const stepDiv = document.createElement("div");
                 stepDiv.className = "step";
 
-                // Determinar estado del paso
                 if (index < pedido.pasoActual) {
                     stepDiv.classList.add("completed");
                 } else if (index === pedido.pasoActual) {
                     stepDiv.classList.add("active");
                 }
 
-                // Obtener fecha si existe en las fechas asignadas
                 let fechaTexto = "Pendiente";
                 if (pedido.fechas && pedido.fechas[index]) {
                     fechaTexto = pedido.fechas[index];
                 }
 
                 stepDiv.innerHTML = `
-                    <div class="step-icon">${index < pedido.pasoActual ? '✓' : ''}</div>
+                    <div class="step-icon">${index <= pedido.pasoActual ? '✓' : ''}</div>
                     <div class="step-content">
                         <div class="step-title">${pasoNombre}</div>
                         <div class="step-time">${fechaTexto}</div>
@@ -345,5 +409,5 @@
         }
     </script>
 </body>
-    </html>
-    
+</html>
+
