@@ -9,10 +9,11 @@
             --purple-primary: #6b21a8;
             --purple-light: #f3e8ff;
             --purple-dark: #581c87;
-            --gray-light: #f3f4f6;
-            --gray-text: #6b7280;
+            --gray-light: #f8fafc;
+            --gray-border: #e2e8f0;
+            --gray-text: #64748b;
             --green-done: #16a34a;
-            --green-bg: #dcfce7;
+            --whatsapp-green: #25d366;
         }
 
         * {
@@ -23,8 +24,8 @@
         }
 
         body {
-            background-color: #fafafa;
-            color: #1f2937;
+            background-color: #f1f5f9;
+            color: #0f172a;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -34,7 +35,7 @@
         header {
             width: 100%;
             background-color: #ffffff;
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: 1px solid var(--gray-border);
             padding: 16px;
             text-align: center;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
@@ -57,21 +58,50 @@
         .container {
             width: 100%;
             max-width: 480px;
-            padding: 20px 16px;
+            padding: 16px;
         }
 
+        /* Banner de bienvenida */
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            color: #ffffff;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 16px;
+            box-shadow: 0 10px 15px -3px rgba(107, 33, 168, 0.2);
+        }
+
+        .welcome-banner .icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .welcome-banner h2 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .welcome-banner p {
+            font-size: 13px;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        /* Tarjeta de búsqueda */
         .search-card {
             background: #ffffff;
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 20px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .search-card label {
             font-size: 13px;
             font-weight: 600;
-            color: #374151;
+            color: #334155;
             display: block;
             margin-bottom: 8px;
         }
@@ -84,8 +114,8 @@
         .search-box input {
             flex: 1;
             padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
             font-size: 15px;
             outline: none;
             text-transform: uppercase;
@@ -100,7 +130,7 @@
             color: white;
             border: none;
             padding: 12px 18px;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
             transition: background 0.2s;
@@ -113,13 +143,14 @@
         .tracking-results {
             display: none;
             background: #ffffff;
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 20px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 16px;
         }
 
         .info-header {
-            border-bottom: 1px solid #f3f4f6;
+            border-bottom: 1px solid #f1f5f9;
             padding-bottom: 12px;
             margin-bottom: 20px;
         }
@@ -136,7 +167,7 @@
             margin-top: 4px;
         }
 
-        /* Timeline Style Shein */
+        /* Timeline */
         .timeline {
             position: relative;
             padding-left: 28px;
@@ -149,7 +180,7 @@
             top: 10px;
             bottom: 10px;
             width: 2px;
-            background-color: #e5e7eb;
+            background-color: #e2e8f0;
         }
 
         .timeline-item {
@@ -168,8 +199,8 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background-color: #e5e7eb;
-            color: #9ca3af;
+            background-color: #e2e8f0;
+            color: #94a3b8;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -197,11 +228,11 @@
         .timeline-title {
             font-size: 14px;
             font-weight: 600;
-            color: #374151;
+            color: #334155;
         }
 
         .timeline-item.completed .timeline-title {
-            color: #111827;
+            color: #0f172a;
         }
 
         .timeline-item.current .timeline-title {
@@ -218,7 +249,7 @@
         .mrw-notice {
             background-color: var(--purple-light);
             border: 1px solid #e9d5ff;
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 12px;
             margin-top: 20px;
             font-size: 12px;
@@ -227,8 +258,51 @@
             display: none;
         }
 
+        /* Tarjeta de soporte WhatsApp */
+        .support-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 18px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .support-card h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .support-card p {
+            font-size: 12px;
+            color: var(--gray-text);
+            margin-bottom: 12px;
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            background-color: var(--whatsapp-green);
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 12px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px -1px rgba(37, 211, 102, 0.2);
+            transition: opacity 0.2s;
+        }
+
+        .whatsapp-btn:active {
+            opacity: 0.9;
+        }
+
         .error-msg {
-            color: #dc2626;
+            color: #ef4444;
             font-size: 13px;
             text-align: center;
             display: none;
@@ -244,8 +318,16 @@
     </header>
 
     <div class="container">
+        <!-- Banner de Bienvenida -->
+        <div class="welcome-banner">
+            <div class="icon">✨📦</div>
+            <h2>¡Sigue tu envío en tiempo real!</h2>
+            <p>Ingresa tu número de guía para consultar el estado actualizado de tu paquete.</p>
+        </div>
+
+        <!-- Cuadro de búsqueda -->
         <div class="search-card">
-            <label for="guideInput">Rastrea tu paquete</label>
+            <label for="guideInput">Número de guía de rastreo</label>
             <div class="search-box">
                 <input type="text" id="guideInput" placeholder="Ej: SNS-1001">
                 <button onclick="buscarGuia()">Buscar</button>
@@ -253,6 +335,7 @@
             <div id="errorMsg" class="error-msg">Número de guía no encontrado. Verifica e intenta de nuevo.</div>
         </div>
 
+        <!-- Resultados -->
         <div id="trackingResults" class="tracking-results">
             <div class="info-header">
                 <div class="guide-num" id="displayGuide">---</div>
@@ -260,17 +343,25 @@
             </div>
 
             <div class="timeline" id="timelineContainer">
-                <!-- Se genera dinámicamente con JS -->
+                <!-- Se genera dinámicamente -->
             </div>
 
             <div id="mrwNotice" class="mrw-notice">
                 📲 <strong>¡Atención!</strong> Tu paquete ya fue entregado a MRW en Venezuela. A partir de este momento, puedes hacerle seguimiento continuo con el número de guía de MRW que te enviamos a tu WhatsApp.
             </div>
         </div>
+
+        <!-- Tarjeta de Soporte WhatsApp -->
+        <div class="support-card">
+            <h3>¿Tienes alguna duda con tu paquete?</h3>
+            <p>Nuestro equipo de soporte está disponible para ayudarte en todo momento.</p>
+            <a href="https://wa.me/573016878177" target="_blank" class="whatsapp-btn">
+                💬 Contactar Soporte por WhatsApp
+            </a>
+        </div>
     </div>
 
     <script>
-        // BASE DE DATOS MANUAL
         const pedidos = {
             "SNS-1001": {
                 cliente: "Cliente: Senses Agency VIP",
@@ -347,5 +438,5 @@
         }
     </script>
 </body>
-  </html>
-  
+    </html>
+    
