@@ -3,443 +3,337 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Senses Tracking - Rastreo de Pedidos</title>
+    <title>Senses Store - Rastreo de Pedido</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --purple-primary: #6b21a8;
-            --purple-light: #f3e8ff;
-            --purple-dark: #581c87;
-            --gray-light: #f8fafc;
-            --gray-border: #e2e8f0;
-            --gray-text: #64748b;
-            --green-done: #16a34a;
-            --whatsapp-green: #25d366;
+            --primary: #8a2be2;
+            --primary-light: #f3e8ff;
+            --secondary: #ec4899;
+            --text-dark: #1f2937;
+            --text-gray: #6b7280;
+            --bg-light: #f9fafb;
+            --success: #10b981;
+            --pending: #e5e7eb;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
-            background-color: #f1f5f9;
-            color: #0f172a;
+            background-color: #f3f4f6;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
             min-height: 100vh;
-        }
-
-        header {
-            width: 100%;
-            background-color: #ffffff;
-            border-bottom: 1px solid var(--gray-border);
-            padding: 16px;
-            text-align: center;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        header h1 {
-            color: var(--purple-primary);
-            font-size: 22px;
-            letter-spacing: 2px;
-            font-weight: 800;
-        }
-
-        header p {
-            font-size: 11px;
-            color: var(--gray-text);
-            letter-spacing: 1px;
-            margin-top: 2px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 480px;
-            padding: 16px;
-        }
-
-        /* Banner de bienvenida */
-        .welcome-banner {
-            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
-            color: #ffffff;
-            border-radius: 16px;
             padding: 20px;
+        }
+
+        .card {
+            background: white;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px 20px;
             text-align: center;
-            margin-bottom: 16px;
-            box-shadow: 0 10px 15px -3px rgba(107, 33, 168, 0.2);
         }
 
-        .welcome-banner .icon {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-
-        .welcome-banner h2 {
-            font-size: 18px;
+        .header h1 {
+            font-size: 24px;
             font-weight: 700;
-            margin-bottom: 6px;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
         }
 
-        .welcome-banner p {
-            font-size: 13px;
+        .header p {
+            font-size: 14px;
             opacity: 0.9;
-            line-height: 1.4;
-        }
-
-        /* Tarjeta de búsqueda */
-        .search-card {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            margin-bottom: 16px;
-        }
-
-        .search-card label {
-            font-size: 13px;
-            font-weight: 600;
-            color: #334155;
-            display: block;
-            margin-bottom: 8px;
         }
 
         .search-box {
+            padding: 20px;
+            background: white;
+            border-bottom: 1px solid #f0f0f0;
             display: flex;
-            gap: 8px;
+            gap: 10px;
         }
 
         .search-box input {
             flex: 1;
-            padding: 12px;
-            border: 1px solid #cbd5e1;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
             border-radius: 10px;
-            font-size: 15px;
+            font-size: 14px;
             outline: none;
-            text-transform: uppercase;
+            transition: border-color 0.3s;
         }
 
         .search-box input:focus {
-            border-color: var(--purple-primary);
+            border-color: var(--primary);
         }
 
         .search-box button {
-            background-color: var(--purple-primary);
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 12px 18px;
+            padding: 12px 20px;
             border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.3s;
         }
 
-        .search-box button:active {
-            background-color: var(--purple-dark);
+        .search-box button:hover {
+            background: #7522be;
         }
 
-        .tracking-results {
-            display: none;
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            margin-bottom: 16px;
+        .content {
+            padding: 25px 20px;
         }
 
-        .info-header {
-            border-bottom: 1px solid #f1f5f9;
-            padding-bottom: 12px;
-            margin-bottom: 20px;
+        .info-cliente {
+            background: var(--primary-light);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .info-header .guide-num {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--purple-primary);
+        .info-cliente span {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 14px;
         }
 
-        .info-header .customer-name {
-            font-size: 13px;
-            color: var(--gray-text);
-            margin-top: 4px;
-        }
-
-        /* Timeline */
         .timeline {
             position: relative;
-            padding-left: 28px;
+            padding-left: 30px;
         }
 
         .timeline::before {
             content: '';
             position: absolute;
-            left: 9px;
+            left: 11px;
             top: 10px;
             bottom: 10px;
-            width: 2px;
-            background-color: #e2e8f0;
+            width: 3px;
+            background: var(--pending);
+            border-radius: 2px;
         }
 
-        .timeline-item {
+        .step {
             position: relative;
-            margin-bottom: 24px;
+            margin-bottom: 25px;
+            opacity: 0.5;
+            transition: all 0.3s;
         }
 
-        .timeline-item:last-child {
+        .step:last-child {
             margin-bottom: 0;
         }
 
-        .icon-dot {
+        .step.completed, .step.active {
+            opacity: 1;
+        }
+
+        .step-icon {
             position: absolute;
-            left: -28px;
-            top: 2px;
-            width: 20px;
-            height: 20px;
+            left: -30px;
+            top: 0;
+            width: 25px;
+            height: 25px;
             border-radius: 50%;
-            background-color: #e2e8f0;
-            color: #94a3b8;
+            background: white;
+            border: 3px solid var(--pending);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 10px;
-            font-weight: bold;
+            color: white;
             z-index: 1;
         }
 
-        .timeline-item.completed .icon-dot {
-            background-color: var(--green-done);
-            color: #ffffff;
+        .step.completed .step-icon {
+            background: var(--success);
+            border-color: var(--success);
         }
 
-        .timeline-item.current .icon-dot {
-            background-color: var(--purple-primary);
-            color: #ffffff;
-            box-shadow: 0 0 0 4px var(--purple-light);
+        .step.active .step-icon {
+            background: var(--primary);
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 4px var(--primary-light);
         }
 
-        .timeline-content {
-            display: flex;
-            flex-direction: column;
+        .step-content {
+            padding-left: 10px;
         }
 
-        .timeline-title {
+        .step-title {
             font-size: 14px;
             font-weight: 600;
-            color: #334155;
+            color: var(--text-dark);
+            margin-bottom: 2px;
         }
 
-        .timeline-item.completed .timeline-title {
-            color: #0f172a;
+        .step.active .step-title {
+            color: var(--primary);
+            font-size: 15px;
         }
 
-        .timeline-item.current .timeline-title {
-            color: var(--purple-primary);
-            font-weight: 700;
-        }
-
-        .timeline-time {
-            font-size: 11px;
-            color: var(--gray-text);
-            margin-top: 2px;
-        }
-
-        .mrw-notice {
-            background-color: var(--purple-light);
-            border: 1px solid #e9d5ff;
-            border-radius: 10px;
-            padding: 12px;
-            margin-top: 20px;
+        .step-time {
             font-size: 12px;
-            color: var(--purple-dark);
-            line-height: 1.4;
-            display: none;
-        }
-
-        /* Tarjeta de soporte WhatsApp */
-        .support-card {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 18px;
-            text-align: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        }
-
-        .support-card h3 {
-            font-size: 14px;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 4px;
-        }
-
-        .support-card p {
-            font-size: 12px;
-            color: var(--gray-text);
-            margin-bottom: 12px;
-        }
-
-        .whatsapp-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            background-color: var(--whatsapp-green);
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 14px;
-            padding: 12px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px -1px rgba(37, 211, 102, 0.2);
-            transition: opacity 0.2s;
-        }
-
-        .whatsapp-btn:active {
-            opacity: 0.9;
+            color: var(--text-gray);
         }
 
         .error-msg {
             color: #ef4444;
-            font-size: 13px;
             text-align: center;
+            padding: 20px;
+            font-size: 14px;
             display: none;
-            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>SENSES</h1>
-        <p>TRACKING SYSTEM</p>
-    </header>
-
-    <div class="container">
-        <!-- Banner de Bienvenida -->
-        <div class="welcome-banner">
-            <div class="icon">✨📦</div>
-            <h2>¡Sigue tu envío en tiempo real!</h2>
-            <p>Ingresa tu número de guía para consultar el estado actualizado de tu paquete.</p>
+    <div class="card">
+        <div class="header">
+            <h1>SENSES STORE</h1>
+            <p>Rastreo de Envíos</p>
         </div>
 
-        <!-- Cuadro de búsqueda -->
-        <div class="search-card">
-            <label for="guideInput">Número de guía de rastreo</label>
-            <div class="search-box">
-                <input type="text" id="guideInput" placeholder="Ej: SNS-1001">
-                <button onclick="buscarGuia()">Buscar</button>
-            </div>
-            <div id="errorMsg" class="error-msg">Número de guía no encontrado. Verifica e intenta de nuevo.</div>
+        <div class="search-box">
+            <input type="text" id="trackingInput" placeholder="Ingresa tu N° de Guía (ej. SNS-2026)">
+            <button onclick="buscarPedido()">Buscar</button>
         </div>
 
-        <!-- Resultados -->
-        <div id="trackingResults" class="tracking-results">
-            <div class="info-header">
-                <div class="guide-num" id="displayGuide">---</div>
-                <div class="customer-name" id="displayName">---</div>
-            </div>
-
-            <div class="timeline" id="timelineContainer">
-                <!-- Se genera dinámicamente -->
-            </div>
-
-            <div id="mrwNotice" class="mrw-notice">
-                📲 <strong>¡Atención!</strong> Tu paquete ya fue entregado a MRW en Venezuela. A partir de este momento, puedes hacerle seguimiento continuo con el número de guía de MRW que te enviamos a tu WhatsApp.
-            </div>
+        <div id="errorMsg" class="error-msg">
+            No encontramos ese número de guía. Por favor verifica e intenta de nuevo.
         </div>
 
-        <!-- Tarjeta de Soporte WhatsApp -->
-        <div class="support-card">
-            <h3>¿Tienes alguna duda con tu paquete?</h3>
-            <p>Nuestro equipo de soporte está disponible para ayudarte en todo momento.</p>
-            <a href="https://wa.me/573016878177" target="_blank" class="whatsapp-btn">
-                💬 Contactar Soporte por WhatsApp
-            </a>
+        <div class="content" id="trackingResult" style="display: none;">
+            <div class="info-cliente">
+                <span id="clienteNombre">Cliente: ---</span>
+                <span id="guiaCodigo" style="color: var(--text-gray);">Guía: ---</span>
+            </div>
+
+            <div class="timeline" id="timelineSteps">
+                <!-- Los pasos se generan dinámicamente -->
+            </div>
         </div>
     </div>
 
     <script>
-    const pedidos = {
-        "SNS-1001": {
-            cliente: "Cliente: Senses Agency VIP",
-            pasoActual: 11,
-            mrwEntregado: false
-        },
-        "SNS-2026": {
-            cliente: "Cliente: Sofía Gómez",
-            pasoActual: 7,
-            mrwEntregado: false
-        }
-    };
+        // =========================================================
+        // TU AGENDA DE PEDIDOS (AQUÍ ES DONDE EDITAS CADA CHICA)
+        // =========================================================
+        const pedidos = {
 
-        const estadosLista = [
-            { titulo: "📦 Pedido confirmado", hora: "Sábado - 09:00 AM" },
-            { titulo: "📦 Preparando pedido", hora: "Sábado - 11:30 AM" },
-            { titulo: "📦 Empacado", hora: "Sábado - 02:00 PM" },
-            { titulo: "🚚 Recogido por transportadora", hora: "Sábado - 05:00 PM" },
-            { titulo: "✈️ Salió de origen", hora: "Domingo - 08:00 AM" },
-            { titulo: "✈️ Llegó al aeropuerto", hora: "Lunes - 02:00 PM" },
-            { titulo: "🛃 En proceso de aduana", hora: "Martes - 10:00 AM" },
-            { titulo: "🇨🇴 Llegó a Colombia", hora: "Miércoles - 06:00 PM" },
-            { titulo: "🚚 Llegó a Medellin", hora: "Jueves - 09:00 AM" },
-            { titulo: "🚚 En camino a senses store", hora: "Viernes - 11:00 AM" },
-            { titulo: "🏠 Recibido en Senses store", hora: "Viernes - 04:00 PM" },
-            { titulo: "📦 Entregado a MRW Venezuela", hora: "Sábado - 10:00 AM" }
+            // --- CHICA 1 ---
+            "SNS-2026": {
+                cliente: "Cliente: Sofía Gómez",
+                pasoActual: 7, // En qué número de paso va hoy (del 0 al 11)
+                fechas: {
+                    0: "18 Jul - 10:50 AM",
+                    1: "18 Jul - 03:00 PM",
+                    2: "19 Jul - 09:00 AM",
+                    3: "19 Jul - 02:15 PM",
+                    4: "20 Jul - 08:30 AM",
+                    5: "21 Jul - 11:00 AM",
+                    6: "21 Jul - 04:30 PM",
+                    7: "22 Jul - 06:00 PM"
+                }
+            },
+
+            // --- CHICA 2 (Ejemplo para cuando agregues otra) ---
+            "SNS-2027": {
+                cliente: "Cliente: María Pérez",
+                pasoActual: 1,
+                fechas: {
+                    0: "25 Jul - 02:30 PM",
+                    1: "26 Jul - 09:00 AM"
+                }
+            }
+
+        };
+
+        // LISTA MAESTRA DE PASOS DEL PAQUETE
+        const listaPasos = [
+            "📦 Pedido confirmado",
+            "📦 Preparando pedido",
+            "📦 Empacado",
+            "🚚 Recogido por transportadora",
+            "✈️ Salió de origen",
+            "✈️ Llegó al aeropuerto",
+            "🛃 En proceso de aduana",
+            "🇨🇴 Llegó a Colombia",
+            "🚚 Llegó a Medellín",
+            "🚚 En camino a Senses Store",
+            "🏠 Recibido en Senses Store",
+            "📦 Entregado a MRW Venezuela"
         ];
 
-        function buscarGuia() {
-            const input = document.getElementById("guideInput").value.trim().toUpperCase();
-            const errorMsg = document.getElementById("errorMsg");
-            const results = document.getElementById("trackingResults");
-            const timeline = document.getElementById("timelineContainer");
-            const notice = document.getElementById("mrwNotice");
+        function buscarPedido() {
+            const input = document.getElementById("trackingInput").value.trim().toUpperCase();
+            const resultDiv = document.getElementById("trackingResult");
+            const errorDiv = document.getElementById("errorMsg");
+            const timeline = document.getElementById("timelineSteps");
 
-            if (pedidos[input]) {
-                errorMsg.style.display = "none";
-                const data = pedidos[input];
+            if (!pedidos[input]) {
+                resultDiv.style.display = "none";
+                errorDiv.style.display = "block";
+                return;
+            }
 
-                document.getElementById("displayGuide").innerText = "Guía: " + input;
-                document.getElementById("displayName").innerText = data.cliente;
+            errorDiv.style.display = "none";
+            resultDiv.style.display = "block";
 
-                timeline.innerHTML = "";
+            const pedido = pedidos[input];
+            document.getElementById("clienteNombre").innerText = pedido.cliente;
+            document.getElementById("guiaCodigo").innerText = `Guía: ${input}`;
 
-                estadosLista.forEach((est, index) => {
-                    const item = document.createElement("div");
-                    item.className = "timeline-item";
+            timeline.innerHTML = "";
 
-                    if (index < data.pasoActual) {
-                        item.classList.add("completed");
-                    } else if (index === data.pasoActual) {
-                        item.classList.add("current");
-                    }
+            listaPasos.forEach((pasoNombre, index) => {
+                const stepDiv = document.createElement("div");
+                stepDiv.className = "step";
 
-                    const isDone = index <= data.pasoActual;
-                    const symbol = isDone ? "✓" : "○";
-
-                    item.innerHTML = `
-                        <div class="icon-dot">${symbol}</div>
-                        <div class="timeline-content">
-                            <div class="timeline-title">${est.titulo}</div>
-                            <div class="timeline-time">${isDone ? est.hora : 'Pendiente'}</div>
-                        </div>
-                    `;
-                    timeline.appendChild(item);
-                });
-
-                if (data.pasoActual >= 11) {
-                    notice.style.display = "block";
-                } else {
-                    notice.style.display = "none";
+                // Determinar estado del paso
+                if (index < pedido.pasoActual) {
+                    stepDiv.classList.add("completed");
+                } else if (index === pedido.pasoActual) {
+                    stepDiv.classList.add("active");
                 }
 
-                results.style.display = "block";
-            } else {
-                results.style.display = "none";
-                errorMsg.style.display = "block";
-            }
+                // Obtener fecha si existe en las fechas asignadas
+                let fechaTexto = "Pendiente";
+                if (pedido.fechas && pedido.fechas[index]) {
+                    fechaTexto = pedido.fechas[index];
+                }
+
+                stepDiv.innerHTML = `
+                    <div class="step-icon">${index < pedido.pasoActual ? '✓' : ''}</div>
+                    <div class="step-content">
+                        <div class="step-title">${pasoNombre}</div>
+                        <div class="step-time">${fechaTexto}</div>
+                    </div>
+                `;
+
+                timeline.appendChild(stepDiv);
+            });
         }
     </script>
 </body>
