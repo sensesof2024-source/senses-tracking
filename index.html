@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senses Tracking - Rastreo de Pedidos</title>
+    <style>
+        :root {
+            --purple-primary: #6b21a8;
+            --purple-light: #f3e8ff;
+            --purple-dark: #581c87;
+            --gray-light: #f3f4f6;
+            --gray-text: #6b7280;
+            --green-done: #16a34a;
+            --green-bg: #dcfce7;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fafafa;
+            color: #1f2937;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        header h1 {
+            color: var(--purple-primary);
+            font-size: 22px;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        header p {
+            font-size: 11px;
+            color: var(--gray-text);
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            padding: 20px 16px;
+        }
+
+        .search-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .search-card label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 8px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            text-transform: uppercase;
+        }
+
+        .search-box input:focus {
+            border-color: var(--purple-primary);
+        }
+
+        .search-box button {
+            background-color: var(--purple-primary);
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .search-box button:active {
+            background-color: var(--purple-dark);
+        }
+
+        .tracking-results {
+            display: none;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .info-header {
+            border-bottom: 1px solid #f3f4f6;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        .info-header .guide-num {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--purple-primary);
+        }
+
+        .info-header .customer-name {
+            font-size: 13px;
+            color: var(--gray-text);
+            margin-top: 4px;
+        }
+
+        /* Timeline Style Shein */
+        .timeline {
+            position: relative;
+            padding-left: 28px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 9px;
+            top: 10px;
+            bottom: 10px;
+            width: 2px;
+            background-color: #e5e7eb;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .icon-dot {
+            position: absolute;
+            left: -28px;
+            top: 2px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #e5e7eb;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .timeline-item.completed .icon-dot {
+            background-color: var(--green-done);
+            color: #ffffff;
+        }
+
+        .timeline-item.current .icon-dot {
+            background-color: var(--purple-primary);
+            color: #ffffff;
+            box-shadow: 0 0 0 4px var(--purple-light);
+        }
+
+        .timeline-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .timeline-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .timeline-item.completed .timeline-title {
+            color: #111827;
+        }
+
+        .timeline-item.current .timeline-title {
+            color: var(--purple-primary);
+            font-weight: 700;
+        }
+
+        .timeline-time {
+            font-size: 11px;
+            color: var(--gray-text);
+            margin-top: 2px;
+        }
+
+        .mrw-notice {
+            background-color: var(--purple-light);
+            border: 1px solid #e9d5ff;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 20px;
+            font-size: 12px;
+            color: var(--purple-dark);
+            line-height: 1.4;
+            display: none;
+        }
+
+        .error-msg {
+            color: #dc2626;
+            font-size: 13px;
+            text-align: center;
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>SENSES</h1>
+        <p>TRACKING SYSTEM</p>
+    </header>
+
+    <div class="container">
+        <div class="search-card">
+            <label for="guideInput">Rastrea tu paquete</label>
+            <div class="search-box">
+                <input type="text" id="guideInput" placeholder="Ej: SNS-1001">
+                <button onclick="buscarGuia()">Buscar</button>
+            </div>
+            <div id="errorMsg" class="error-msg">Número de guía no encontrado. Verifica e intenta de nuevo.</div>
+        </div>
+
+        <div id="trackingResults" class="tracking-results">
+            <div class="info-header">
+                <div class="guide-num" id="displayGuide">---</div>
+                <div class="customer-name" id="displayName">---</div>
+            </div>
+
+            <div class="timeline" id="timelineContainer">
+                <!-- Se genera dinámicamente con JS -->
+            </div>
+
+            <div id="mrwNotice" class="mrw-notice">
+                📲 <strong>¡Atención!</strong> Tu paquete ya fue entregado a MRW en Venezuela. A partir de este momento, puedes hacerle seguimiento continuo con el número de guía de MRW que te enviamos a tu WhatsApp.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // BASE DE DATOS MANUAL
+        const pedidos = {
+            "SNS-1001": {
+                cliente: "Cliente: Senses Agency VIP",
+                pasoActual: 11,
+                mrwEntregado: false
+            }
+        };
+
+        const estadosLista = [
+            { titulo: "📦 Pedido confirmado", hora: "Sábado - 09:00 AM" },
+            { titulo: "📦 Preparando pedido", hora: "Sábado - 11:30 AM" },
+            { titulo: "📦 Empacado", hora: "Sábado - 02:00 PM" },
+            { titulo: "🚚 Recogido por transportadora", hora: "Sábado - 05:00 PM" },
+            { titulo: "✈️ Salió de origen", hora: "Domingo - 08:00 AM" },
+            { titulo: "✈️ Llegó al aeropuerto", hora: "Lunes - 02:00 PM" },
+            { titulo: "🛃 En proceso de aduana", hora: "Martes - 10:00 AM" },
+            { titulo: "🇨🇴 Llegó a Colombia", hora: "Miércoles - 06:00 PM" },
+            { titulo: "🚚 Llegó a Bogotá", hora: "Jueves - 09:00 AM" },
+            { titulo: "🚚 En camino a centro de despacho", hora: "Viernes - 11:00 AM" },
+            { titulo: "🏠 Recibido en centro de acopio", hora: "Viernes - 04:00 PM" },
+            { titulo: "📦 Entregado a MRW Venezuela", hora: "Sábado - 10:00 AM" }
+        ];
+
+        function buscarGuia() {
+            const input = document.getElementById("guideInput").value.trim().toUpperCase();
+            const errorMsg = document.getElementById("errorMsg");
+            const results = document.getElementById("trackingResults");
+            const timeline = document.getElementById("timelineContainer");
+            const notice = document.getElementById("mrwNotice");
+
+            if (pedidos[input]) {
+                errorMsg.style.display = "none";
+                const data = pedidos[input];
+
+                document.getElementById("displayGuide").innerText = "Guía: " + input;
+                document.getElementById("displayName").innerText = data.cliente;
+
+                timeline.innerHTML = "";
+
+                estadosLista.forEach((est, index) => {
+                    const item = document.createElement("div");
+                    item.className = "timeline-item";
+
+                    if (index < data.pasoActual) {
+                        item.classList.add("completed");
+                    } else if (index === data.pasoActual) {
+                        item.classList.add("current");
+                    }
+
+                    const isDone = index <= data.pasoActual;
+                    const symbol = isDone ? "✓" : "○";
+
+                    item.innerHTML = `
+                        <div class="icon-dot">${symbol}</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">${est.titulo}</div>
+                            <div class="timeline-time">${isDone ? est.hora : 'Pendiente'}</div>
+                        </div>
+                    `;
+                    timeline.appendChild(item);
+                });
+
+                if (data.pasoActual >= 11) {
+                    notice.style.display = "block";
+                } else {
+                    notice.style.display = "none";
+                }
+
+                results.style.display = "block";
+            } else {
+                results.style.display = "none";
+                errorMsg.style.display = "block";
+            }
+        }
+    </script>
+</body>
+  </html>
+  
