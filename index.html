@@ -296,7 +296,15 @@
                 <h3 id="guiaCodigo">Guía: ---</h3>
                 <p id="clienteNombre">Cliente: ---</p>
             </div>
-
+            <!-- TARJETA DE FECHA ESTIMADA ESTILO SHEIN -->
+    <div id="entregaContainer" style="display: none; margin: 15px 0; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px;">
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; color: #1e293b;">
+            <span style="font-size: 20px;">🚚</span>
+            <span>Entrega</span>
+            <span id="entregaFechaTxt" style="color: #9333ea; font-weight: 700;"></span>
+        </div>
+        <div id="entregaDiasTxt" style="font-size: 13px; color: #64748b; padding-left: 28px; margin-top: 4px;"></div>
+    </div>
             <div class="timeline" id="timelineSteps"></div>
         </div>
 
@@ -344,7 +352,18 @@
                     2: "01 Ago - 11:15 AM",
                     3: "02 Ago - 10:00 AM",
                 }
-            }
+            },
+            
+    
+    "SNS-005": {
+        cliente: "Cliente: Maddison García",
+        pasoActual: 0,
+        entregaFecha: "08/20 - 08/30",
+        entregaDias: "10-17 Días Laborables",
+        fechas: {
+            0: "08/06/2026"
+        }
+    }
 
         };
 
@@ -379,6 +398,13 @@
             resultDiv.style.display = "block";
 
             const pedido = pedidos[input];
+            if (pedido.entregaFecha) {
+        document.getElementById("entregaFechaTxt").innerText = pedido.entregaFecha;
+        document.getElementById("entregaDiasTxt").innerText = pedido.entregaDias || "";
+        document.getElementById("entregaContainer").style.display = "block";
+    } else {
+        document.getElementById("entregaContainer").style.display = "none";
+    }
             document.getElementById("clienteNombre").innerText = pedido.cliente;
             document.getElementById("guiaCodigo").innerText = `Guía: ${input}`;
 
